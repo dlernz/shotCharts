@@ -1,0 +1,35 @@
+<html>
+<head>
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/lightslider.css')}}" />
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/court.css')}}" />
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src= "{{ url_for('static', filename='js/lightslider.js')}}"></script>
+    <script src= "{{ url_for('static', filename='js/kinetic_v5.1.0/kinetic_v5.1.0.min.js')}}"></script>
+</head>
+
+<div class="playerContainer demo">
+    <ul id="lightSlider">
+        {% for img, id in team_images.items() %}
+            <a href= "{{ url_for('team', player_id = id) }}">
+                <li data-thumb= {{img}}>
+                    <img src= "{{ url_for('static', filename='images/{}'.format(img))}}" />
+                </li>
+            </a>
+        {% endfor %}
+    </ul>
+</div>
+
+<div id="container">
+    <script src= "{{ url_for('static', filename='js/draw_court.js')}}"></script>
+    <script>
+//        {{ output }};
+//        var result = addPlayerShots({{ output }});
+        var result = addPlayerShots({{ playerShots | tojson }});
+        //myvar = addShot({{ x }}, {{ y }});
+    </script>
+<!--</script>-->
+
+    </div>
+
+
+</html>
