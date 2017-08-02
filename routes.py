@@ -21,6 +21,7 @@ def hello_world():
 @app.route('/team/<player_id>')
 @app.route('/team')
 def team(player_id = "202322"):
+    names = shots.get_team_names()
     playerDicts = []
     playerShots = shots.get_player_shots_db(player_id)
     one_shot = model_to_dict(playerShots[0])
@@ -30,12 +31,14 @@ def team(player_id = "202322"):
 
     team_id = one_shot['teamId']
     images = shots.get_team_images(team_id)
-    return render_template('court.html', playerShots = playerDicts, team_images = images )
+    return render_template('court.html', playerShots = playerDicts, team_images = images, names=names)
 
 @app.route('/test')
 def testing():
     #target_shot = acquire_data.get_target_shot(202322, 271)
     #output = [target_shot]
+    names = shots.get_team_names()
+    print names
     return render_template('test.html', output = "hello")
 
 @app.route('/hello')

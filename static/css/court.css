@@ -9,3 +9,8 @@ div.playerContainer {
     height: 800px;
     padding-top: 100px;
 }
+
+.dropdown {
+    padding-left: 25px;
+    padding-top: 25px;
+}

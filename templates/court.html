@@ -2,10 +2,22 @@
 <head>
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/lightslider.css')}}" />
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/court.css')}}" />
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css')}}" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src= "{{ url_for('static', filename='js/lightslider.js')}}"></script>
     <script src= "{{ url_for('static', filename='js/kinetic_v5.1.0/kinetic_v5.1.0.min.js')}}"></script>
+    <script src= "{{ url_for('static', filename='js/bootstrap.min.js')}}"></script>
 </head>
+
+<div class="dropdown">
+  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
+  <span class="caret"></span></button>
+  <ul class="dropdown-menu">
+    {% for id, name in names.items() %}
+      <li><a href="#">{{name}}</a></li>
+    {% endfor %}
+  </ul>
+</div>
 
 <div class="playerContainer demo">
     <ul id="lightSlider">
@@ -22,13 +34,9 @@
 <div id="container">
     <script src= "{{ url_for('static', filename='js/draw_court.js')}}"></script>
     <script>
-//        {{ output }};
-//        var result = addPlayerShots({{ output }});
         var result = addPlayerShots({{ playerShots | tojson }});
-        //myvar = addShot({{ x }}, {{ y }});
     </script>
-<!--</script>-->
-
+    
     </div>
 
 

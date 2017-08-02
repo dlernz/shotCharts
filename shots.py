@@ -53,10 +53,6 @@ def add_shots(shotsData, headers):
         game = shotsData[i]
         shotChart = get_shot_chart_dictionary(game, headers)
         add_shots_ind_game(shotChart)
-            # student_record = Student.get(username=student['username'])
-            # if student_record.points != student['points']:
-            #     student_record.points = student['points']
-            # student_record.save()
 
 def add_shots_ind_game(shotChart):
     try:
@@ -94,10 +90,16 @@ def get_team_images(team_id):
     images = {}
     for shotChart in Shot.select().where(Shot.teamId == team_id):
         link = "{}.png".format(shotChart.playerId)
-        # link = "static/images/{}.png".format(shotChart.playerId)
         if link not in images:
             images[link] = shotChart.playerId
     return images
+
+
+def get_team_names():
+    names = {}
+    for name in Shot.select(Shot.teamName, Shot.teamId).distinct():
+        names[name.teamId] = name.teamName
+    return names
 
 if __name__ == '__main__':
     db.connect()
