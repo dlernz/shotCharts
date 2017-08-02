@@ -83,10 +83,9 @@ def write_shots_to_database():
         shots = playerData['rowSet']
         add_shots(shot_headers, shots)
 
-
 def get_player_shots_db(playerId):
     playerShots = []
-    for shotChart in Shot.select():
+    for shotChart in Shot.select().where(Shot.playerId == playerId):
         if shotChart.playerId == playerId:
             playerShots.append(shotChart)
     return playerShots
