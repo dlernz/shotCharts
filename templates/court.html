@@ -10,11 +10,11 @@
 </head>
 
 <div class="dropdown">
-  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
+  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Select Team
   <span class="caret"></span></button>
   <ul class="dropdown-menu">
     {% for id, name in names.items() %}
-      <li><a href="#">{{name}}</a></li>
+      <li><a href="{{ url_for('team', team_id = id) }}">{{name}}</a></li>
     {% endfor %}
   </ul>
 </div>
@@ -22,7 +22,7 @@
 <div class="playerContainer demo">
     <ul id="lightSlider">
         {% for img, id in team_images.items() %}
-            <a href= "{{ url_for('team', player_id = id) }}">
+            <a href= "{{ url_for('team_loaded', team_id = team_id, player_id = id) }}">
                 <li data-thumb= {{img}}>
                     <img src= "{{ url_for('static', filename='images/{}'.format(img))}}" />
                 </li>
@@ -36,7 +36,7 @@
     <script>
         var result = addPlayerShots({{ playerShots | tojson }});
     </script>
-    
+
     </div>
 
 

@@ -94,12 +94,17 @@ def get_team_images(team_id):
             images[link] = shotChart.playerId
     return images
 
-
 def get_team_names():
     names = {}
     for name in Shot.select(Shot.teamName, Shot.teamId).distinct():
         names[name.teamId] = name.teamName
     return names
+
+def get_players_for_team(team_id):
+    player_ids = []
+    for record in Shot.select(Shot.playerId).where(Shot.teamId == team_id).distinct():
+        player_ids.append(record.playerId)
+    return player_ids
 
 if __name__ == '__main__':
     db.connect()
