@@ -27,7 +27,7 @@ def team(team_id="1610612764", player_id="1627849"):
 def team_loaded(team_id, player_id):
     return load_team_page_data(team_id, player_id, False)
 
-
+# TODO: Get images of players recently added to database
 # TODO: Clean up templates so images don't have to be pulled every load, just refresh shot page (make modules of page)
 def load_team_page_data(team_id, player_id, new_load = True):
     playerDicts = []

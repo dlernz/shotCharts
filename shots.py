@@ -4,8 +4,6 @@ from playhouse.migrate import *
 
 
 db = SqliteDatabase('shot_charts.db')
-migrator = SqliteMigrator(db)
-
 
 class Shot(Model):
     gameId = CharField() #make foreign key field for games table?
@@ -31,7 +29,6 @@ class Shot(Model):
     homeTeam = CharField()
     awayTeam = CharField()
 
-
     class Meta:
         database = db
 
@@ -45,6 +42,7 @@ def get_shot_chart_dictionary(game, headers):
     for i in range(len(headers)):
         header = headers[i]
         value = game[i]
+
         shotChart[header] = value
     return shotChart
 
@@ -70,14 +68,17 @@ def add_shots_ind_game(shotChart):
     except IntegrityError:
         print shotChart
 
-### TODO: Check if player_id already in database
 def write_shots_to_database():
+    inDatabase = []
+    for player in Shot.select(Shot.playerId).distinct():
+        inDatabase.append(player.playerId)
     playerIds = data.upload_from_json("player_ids")
     for id in playerIds:
-        playerData = data.upload_from_json(id)
-        shot_headers = playerData['headers']
-        shots = playerData['rowSet']
-        add_shots(shot_headers, shots)
+        if id not in inDatabase:
+            playerData = data.upload_from_json("shot_charts/{}".format(id))
+            shot_headers = playerData['headers']
+            shots = playerData['rowSet']
+            add_shots(shots, shot_headers)
 
 def get_player_shots_db(playerId):
     playerShots = []
@@ -106,10 +107,9 @@ def get_players_for_team(team_id):
         player_ids.append(record.playerId)
     return player_ids
 
-if __name__ == '__main__':
-    db.connect()
-    db.create_tables([Shot], safe=True) ##if table created, peewee won't freak
-    #write_shots_to_database()
 
+# db.connect()
+# db.create_tables([Shot], safe=True) ##if table created, peewee won't freak
+# write_shots_to_database()
 
 
