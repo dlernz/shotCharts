@@ -1,7 +1,4 @@
-
-
-
-var width = window.innerWidth-30 || 900
+var width = window.innerWidth-30 || 900;
 if (width>1000) {
 	width=1000
 }
@@ -25,7 +22,6 @@ var rim = new Kinetic.Shape({
 	sceneFunc: function(context) {
 		context.beginPath();
 		context.moveTo(344.5,50);
-		// context.arcTo(344.5,50,554.5,50,144);
 		context.arc(450,144.5,144,-.7279,3.8679)
    		context.lineTo(344.5,50);
 		context.closePath();
@@ -86,9 +82,6 @@ var threes = new Kinetic.Shape({
 
 nba_court_base();
 
-// $("#container").click(function() {
-//   alert( "Handler for .click() called." );
-// });
 
 // TODO: Refactor for drawing court, maybe assigning CSS properties, class name, ids
 function nba_court_base(x_coord,y_coord) {
@@ -112,14 +105,7 @@ function nba_court_base(x_coord,y_coord) {
 	court.add(base)
 	var base=new Kinetic.Rect({x:558,y:50,width:36,height:342,fill:'#C0C0C0'})
 	court.add(base)
-	// var line=new Kinetic.Line({strokeWidth:1,points:[0,50,900,50],stroke:'black'})
-	// court.add(line)
-	// var line=new Kinetic.Line({strokeWidth:1,points:[0,643,900,643],stroke:'black'})
-	// court.add(line)
-	// var line=new Kinetic.Line({strokeWidth:2,points:[0,643,0,51],stroke:'black'})
-	// court.add(line)
-	// var line=new Kinetic.Line({strokeWidth:2,points:[900,643,900,51],stroke:'black'})
-	// court.add(line)
+
 	var line=new Kinetic.Line({strokeWidth:2,points:[306,50,306,392],stroke:'white',shadowColor:'#ffffff',shadowBlur:100})
 	court.add(line)
 	var line=new Kinetic.Line({strokeWidth:2,points:[594,50,594,392],stroke:'white',shadowColor:'#ffffff',shadowBlur:100})
@@ -202,11 +188,12 @@ function addShot(x,y, made) {
     var old_radius = 467;
     var new_radius = 835
     var new_coords = get_new_coords(x, y, old_radius, new_radius);
+    var toAdd;
     if(!made){
         toAdd = new Kinetic.Circle({x: new_coords["x"],y: new_coords['y'], radius:8,stroke: '#ff0000'});
     }
     else {
-        toAdd = new Kinetic.Circle({x:  new_coords['x'], y: new_coords['y'], radius:8,stroke: '#008000',fill:'#008000'});
+        toAdd = new Kinetic.Circle({x:  new_coords['x'], y: new_coords['y'], radius:8,stroke: '#008000'});
     }
     return toAdd
 }
@@ -222,7 +209,6 @@ function get_new_coords(x, y, old_radius, new_radius){
     return coords
 }
 
-
 $('#lightSlider').lightSlider({
 	gallery: false,
 	item: 3,
@@ -233,35 +219,3 @@ $('#lightSlider').lightSlider({
 	verticalHeight:500,
 	vThumbWidth:100,
 });
-
-function add_team_images(images){
-
-}
-
-// function createShot(x,y) {
-//     console.log(x);
-//     console.log(y);
-//     var shot = new Kinetic.Circle({x: x,y: y, radius:8,stroke: '#008000',fill:'#008000'});
-//     return shot
-//
-// }
-
-
-// $(document).ready(function() {
-//     console.log({{ numShots }});
-//     // var canvas = document.getElementsByTagName('canvas')[0];
-//     // var context = canvas.getContext('2d');
-//     // console.log(context);
-//     // var centerX = canvas.width / 2;
-//     // var centerY = canvas.height / 2;
-//     // var radius = 70;
-//     //
-//     // context.beginPath();
-//     // context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
-//     // context.fillStyle = 'green';
-//     // context.fill();
-//     // context.lineWidth = 5;
-//     // context.strokeStyle = '#003300';
-//     // context.stroke();
-//     // context.closePath();
-// });

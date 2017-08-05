@@ -27,7 +27,6 @@ def team(team_id="1610612764", player_id="1627849"):
 def team_loaded(team_id, player_id):
     return load_team_page_data(team_id, player_id, False)
 
-# TODO: Get images of players recently added to database
 # TODO: Clean up templates so images don't have to be pulled every load, just refresh shot page (make modules of page)
 def load_team_page_data(team_id, player_id, new_load = True):
     playerDicts = []
@@ -49,8 +48,6 @@ def load_team_page_data(team_id, player_id, new_load = True):
 def testing():
     #target_shot = acquire_data.get_target_shot(202322, 271)
     #output = [target_shot]
-    ids = shots.get_players_for_team("1610612764")
-    print ids
     return render_template('test.html', output = "hello")
 
 @app.route('/hello')
