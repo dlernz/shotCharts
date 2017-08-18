@@ -13,11 +13,6 @@ def court():
         playerDicts.append(json_data)
     return render_template('court.html', playerShots = playerDicts)  # render a template
 
-@app.route('/')
-def hello_world():
-    playerShots = ""
-    return render_template('index.html', playerShots = playerShots)
-
 @app.route('/team/<team_id>')
 @app.route('/team')
 def team(team_id="1610612764", player_id="1627849"):
@@ -27,6 +22,10 @@ def team(team_id="1610612764", player_id="1627849"):
 def team_loaded(team_id, player_id):
     return load_team_page_data(team_id, player_id, False)
 
+# TODO: remove shots outside of court area
+# TODO: upgrade button for selecting teams
+# TODO: Add player banner with average shot statistics
+# TODO: Clutch shots filter -- only show shots shot in crunch time
 # TODO: Clean up templates so images don't have to be pulled every load, just refresh shot page (make modules of page)
 def load_team_page_data(team_id, player_id, new_load = True):
     playerDicts = []
@@ -54,6 +53,11 @@ def testing():
 def hello():
     data = {'username': 'Pang', 'site': 'stackoverflow.com'}
     return render_template('settings_trash.html', data=data)
+
+@app.route('/')
+def hello_world():
+    playerShots = ""
+    return render_template('index.html', playerShots = playerShots)
 
 if __name__ == '__main__':
     app.run()

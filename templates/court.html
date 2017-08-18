@@ -9,17 +9,37 @@
     <script src= "{{ url_for('static', filename='js/bootstrap.min.js')}}"></script>
 </head>
 
-<div class="dropdown">
-  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Select Team
-  <span class="caret"></span></button>
-  <ul class="dropdown-menu">
-    {% for id, name in names.items() %}
-      <li><a href="{{ url_for('team', team_id = id) }}">{{name}}</a></li>
-    {% endfor %}
-  </ul>
+<div class="topContainer">
+    <table id="playerInfoTable" class="table">
+    <tbody>
+      <tr>
+        <td>
+            <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">Select Team
+            <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+                {% for id, name in names.items() %}
+                <li><a href="{{ url_for('team', team_id = id) }}">{{name}}</a></li>
+                {% endfor %}
+            </ul>
+        </td>
+          <!--TODO: make table/row creation dynamic, pass in json and loop through in js to create-->
+        <td id="playerName" class="playerInfo">Name: </td>
+        <td id="shotsMade" class="shotsInfo">Shots Made: </td>
+        <td id="fgPercent" class="fgPercent">FG%: </td>
+        <td id="clutchTime" class="clutchTime">Clutch Time</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td id="playerTeam" class="playerInfo">Team: </td>
+        <td id="shotsAttempted" class="shotsInfo">Shots Attempted: </td>
+        <td id="effFgPercent" class="fgPercent">eFG%: </td>
+        <td></td>
+      </tr>
+    </tbody>
+    </table>
 </div>
 
-<div class="playerContainer demo">
+<div class="playerContainer">
     <ul id="lightSlider">
         {% for img, id in team_images.items() %}
             <a href= "{{ url_for('team_loaded', team_id = team_id, player_id = id) }}">
@@ -31,13 +51,15 @@
     </ul>
 </div>
 
+
 <div id="container">
     <script src= "{{ url_for('static', filename='js/draw_court.js')}}"></script>
     <script>
         var result = addPlayerShots({{ playerShots | tojson }});
+        var playerInfo = getPlayerInfo({{ playerShots | tojson }});
+        injectPlayerInfo(playerInfo);
     </script>
-
-    </div>
+</div>
 
 
 </html>

@@ -83,8 +83,7 @@ def write_shots_to_database():
 def get_player_shots_db(playerId):
     playerShots = []
     for shotChart in Shot.select().where(Shot.playerId == playerId):
-        if shotChart.playerId == playerId:
-            playerShots.append(shotChart)
+        playerShots.append(shotChart)
     return playerShots
 
 def get_team_images(team_id):
@@ -108,8 +107,7 @@ def get_players_for_team(team_id):
     return player_ids
 
 
-# db.connect()
-# db.create_tables([Shot], safe=True) ##if table created, peewee won't freak
+# initialize()
 # write_shots_to_database()
 
 

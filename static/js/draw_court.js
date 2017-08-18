@@ -83,11 +83,11 @@ var threes = new Kinetic.Shape({
 nba_court_base();
 
 
-// TODO: Refactor for drawing court, maybe assigning CSS properties, class name, ids
-function nba_court_base(x_coord,y_coord) {
-	var base=new Kinetic.Rect({x:54,y:50,width:792,height:255,fill:'#D0D0D0'})
+// TODO: Refactor for drawing court, maybe assigning CSS properties, class name, ids -- refactor to HTML 5 canvas?
+function nba_court_base() {
+	var base=new Kinetic.Rect({x:54,y:50,width:792,height:255,fill:'#a50026'})
 	court.add(base)
-	var base=new Kinetic.Rect({x:0,y:0,width:900,height:49,fill:'#ffffff'})
+	var base=new Kinetic.Rect({x:0,y:0,width:900,height:49,fill:'#D0D0D0'})
 	court.add(base)
 	var base=new Kinetic.Rect({x:0,y:50,width:54,height:590,fill:'#E0E0E0'})
 	court.add(base)
@@ -106,8 +106,8 @@ function nba_court_base(x_coord,y_coord) {
 	var base=new Kinetic.Rect({x:558,y:50,width:36,height:342,fill:'#C0C0C0'})
 	court.add(base)
 
-	var line=new Kinetic.Line({strokeWidth:2,points:[306,50,306,392],stroke:'white',shadowColor:'#ffffff',shadowBlur:100})
-	court.add(line)
+	// var line=new Kinetic.Line({strokeWidth:2,points:[306,50,306,392],stroke:'white',shadowColor:'#ffffff',shadowBlur:100})
+	// court.add(line)
 	var line=new Kinetic.Line({strokeWidth:2,points:[594,50,594,392],stroke:'white',shadowColor:'#ffffff',shadowBlur:100})
 	court.add(line)
 	var line=new Kinetic.Line({strokeWidth:2,points:[342,50,342,392],stroke:'white',shadowColor:'#ffffff',shadowBlur:100})
@@ -159,16 +159,15 @@ function nba_court_base(x_coord,y_coord) {
 	var line=new Kinetic.Line({strokeWidth:2,points:[846,50,846,305.6],stroke:'white',shadowColor:'#ffffff',shadowBlur:100})
 	court.add(line)
 
-	var box = new Kinetic.Circle({x: 798,y: 34, radius:8,fill: '#a50026',shadowBlur:2,shadowColor:'#000000'});
-	court.add(box)
-	var box = new Kinetic.Circle({x: 798,y: 34, radius:7,fill: '#a50026',strokeWidth:1,stroke:'rgba(195,30,68,1)'});
-	court.add(box)
+	// var box = new Kinetic.Circle({x: 798,y: 34, radius:8,fill: '#a50026',shadowBlur:2,shadowColor:'#000000'});
+	// court.add(box)
+	// var box = new Kinetic.Circle({x: 798,y: 34, radius:7,fill: '#a50026',strokeWidth:1,stroke:'rgba(195,30,68,1)'});
+	// court.add(box)
 	court.add(rim)
 	court.add(midrange)
 	court.add(threes)
 	stage.add(court)
 }
-
 
 function addPlayerShots(playerShots){
     for (i = 0; i < playerShots.length; i++) {
@@ -219,3 +218,52 @@ $('#lightSlider').lightSlider({
 	verticalHeight:500,
 	vThumbWidth:100,
 });
+
+
+$(".dropdown-menu").css({"top": "60px", "left": "25px"});
+
+
+function getPlayerInfo(playerShots){
+	var curShot = playerShots[0];
+	curShot = JSON.parse(curShot);
+	var playerName = curShot["playerName"];
+	var teamName = curShot["teamName"];
+	var shotsAttempted = playerShots.length;
+	var shotsMade = 0;
+	var triples = 0;
+	for(var i = 0; i < playerShots.length; i++){
+		var shot = JSON.parse(playerShots[i]);
+		var shotType = shot["shotType"];
+		var shotMadeFlag = shot["shotMadeFlag"];
+
+		if (shotMadeFlag){
+			shotsMade += 1;
+		}
+
+		if(shotMadeFlag == 1 && shotType == "3PT Field Goal"){
+			triples += 1
+		}
+	}
+	var fgPercent = 100.0*shotsMade/shotsAttempted;
+	fgPercent = fgPercent.toFixed(2);
+	var effFgPercent = 100*(shotsMade + 0.5*triples)/shotsAttempted; // (FG + 0.5 * 3P) / FGA
+	effFgPercent = effFgPercent.toFixed(2);
+
+	var playerData = {"playerName": playerName, "playerTeam": teamName, "shotsMade": shotsMade, "shotsAttempted": shotsAttempted,
+		"effFgPercent": effFgPercent, "fgPercent": fgPercent};
+	return playerData;
+}
+
+function injectPlayerInfo(playerData){
+	 var playerInfoTable = $("#playerInfoTable");
+	 var tableCells = $(playerInfoTable).find("td");
+	 var data;
+	 $(tableCells.each(function(){
+	 	var id = this.id;
+	 	var content = this.innerHTML;
+		data = playerData[id];
+		if (typeof data != 'undefined'){
+			this.innerHTML = content + data;
+		}
+	 }))
+}
