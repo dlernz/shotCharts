@@ -1,5 +1,4 @@
 
-
 div.playerContainer {
     float: left;
     width: 250px;
@@ -21,25 +20,6 @@ div.playerContainer {
     height:100px;
 }
 
-td {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size: 20px;
-    border-top: none !important;
-}
-
-.playerInfo {
-    padding: 25px;
-}
-.clutchTime {
-    /*padding: 25px; background-color: #5BC0DE; border-radius: 25px;*/
-}
-.fgPercent {
-    padding: 25px;
-}
-.shotsInfo {
-    padding: 25px;
-}
-
 .btn-info {
     padding: 10px 20px;
     font-size: 30px;
@@ -47,7 +27,31 @@ td {
     width:150px;
 }
 
-.dropdown-menu{
+.teamDrop {
+    padding-top: 20px;
+    padding-left: 25px
+}
+
+.dropdown-menu {
     top: 60px;
     left: 25px;
+}
+
+.playerInfoTable {
+    display: table;
+    width: auto;
+    border-spacing: 5px;
+    margin: auto;
+    text-align: center;
+}
+
+.tableRow {
+  display: table-row;
+  width: auto;
+  clear: both;
+}
+.tableCol {
+  float: left;
+  display: table-column;
+  width: 200px;
 }

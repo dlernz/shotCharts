@@ -9,34 +9,27 @@
     <script src= "{{ url_for('static', filename='js/bootstrap.min.js')}}"></script>
 </head>
 
-<div class="topContainer">
-    <table id="playerInfoTable" class="table">
-    <tbody>
-      <tr>
-        <td>
-            <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">Select Team
-            <span class="caret"></span></button>
-            <ul class="dropdown-menu">
-                {% for id, name in names.items() %}
-                <li><a href="{{ url_for('team', team_id = id) }}">{{name}}</a></li>
-                {% endfor %}
-            </ul>
-        </td>
-          <!--TODO: make table/row creation dynamic, pass in json and loop through in js to create-->
-        <td id="playerName" class="playerInfo">Name: </td>
-        <td id="shotsMade" class="shotsInfo">Shots Made: </td>
-        <td id="fgPercent" class="fgPercent">FG%: </td>
-        <td id="clutchTime" class="clutchTime">Clutch Time</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td id="playerTeam" class="playerInfo">Team: </td>
-        <td id="shotsAttempted" class="shotsInfo">Shots Attempted: </td>
-        <td id="effFgPercent" class="fgPercent">eFG%: </td>
-        <td></td>
-      </tr>
-    </tbody>
-    </table>
+<div class="teamDrop">
+    <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">Select Team
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+        {% for id, name in names.items() %}
+        <li><a href="{{ url_for('team', team_id = id) }}">{{name}}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div id="playerInfoTable" class="playerInfoTable">
+    <div class="tableRow">
+        <div id="playerName" class="tableCol playerInfo">Name: </div>
+        <div id="shotsMade" class="tableCol shotsInfo">Shots Made: </div>
+        <div id="fgPercent" class="tableCol fgPercent">FG%: </div>
+    </div>
+    <div class="tableRow">
+        <div id="playerTeam" class="tableCol playerInfo">Team: </div>
+        <div id="shotsAttempted" class="tableCol shotsInfo">Shots Attempted: </div>
+        <div id="effFgPercent" class="tableCol fgPercent">eFG%: </div>
+    </div>
 </div>
 
 <div class="playerContainer">

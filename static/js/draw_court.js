@@ -85,9 +85,9 @@ nba_court_base();
 
 // TODO: Refactor for drawing court, maybe assigning CSS properties, class name, ids -- refactor to HTML 5 canvas?
 function nba_court_base() {
-	var base=new Kinetic.Rect({x:54,y:50,width:792,height:255,fill:'#a50026'})
+	var base=new Kinetic.Rect({x:54,y:50,width:792,height:255,fill:'#E0E0E0'})
 	court.add(base)
-	var base=new Kinetic.Rect({x:0,y:0,width:900,height:49,fill:'#D0D0D0'})
+	var base=new Kinetic.Rect({x:0,y:0,width:900,height:49,fill:'#a50026'})
 	court.add(base)
 	var base=new Kinetic.Rect({x:0,y:50,width:54,height:590,fill:'#E0E0E0'})
 	court.add(base)
@@ -256,9 +256,9 @@ function getPlayerInfo(playerShots){
 
 function injectPlayerInfo(playerData){
 	 var playerInfoTable = $("#playerInfoTable");
-	 var tableCells = $(playerInfoTable).find("td");
+	 var tableElts = $(playerInfoTable).find(".tableCol");
 	 var data;
-	 $(tableCells.each(function(){
+	 $(tableElts.each(function(){
 	 	var id = this.id;
 	 	var content = this.innerHTML;
 		data = playerData[id];
