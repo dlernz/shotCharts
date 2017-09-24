@@ -3,6 +3,14 @@
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/lightslider.css')}}" />
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/court.css')}}" />
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css')}}" />
+
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/d3.basketball-shot-chart.css')}}" />
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="http://rawgit.com/virajsanghvi/d3-plugins/master/hexbin/hexbin.js"></script>
+    <script src= "{{ url_for('static', filename='js/d3.chart.min.js')}}"></script>
+    <script src="http://rawgit.com/virajsanghvi/d3.chart.defaults/master/d3.chart.defaults.js"></script>
+    <script src= "{{ url_for('static', filename='js/d3.basketball-shot-chart.js')}}"></script>
+
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src= "{{ url_for('static', filename='js/lightslider.js')}}"></script>
     <script src= "{{ url_for('static', filename='js/kinetic_v5.1.0/kinetic_v5.1.0.min.js')}}"></script>
@@ -44,11 +52,13 @@
     </ul>
 </div>
 
+<div id="chart">
+</div>
 
 <div id="container">
     <script src= "{{ url_for('static', filename='js/draw_court.js')}}"></script>
     <script>
-        var result = addPlayerShots({{ playerShots | tojson }});
+        var data = addPlayerShots({{ playerShots | tojson }});
         var playerInfo = getPlayerInfo({{ playerShots | tojson }});
         injectPlayerInfo(playerInfo);
     </script>
