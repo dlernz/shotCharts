@@ -256,7 +256,7 @@ function getPlayerInfo(playerShots){
 
 function injectPlayerInfo(playerData){
 	 var playerInfoTable = $("#playerInfoTable");
-	 var tableElts = $(playerInfoTable).find(".tableCol");
+	 var tableElts = $(playerInfoTable).find(".tableItem");
 	 var data;
 	 $(tableElts.each(function(){
 	 	var id = this.id;

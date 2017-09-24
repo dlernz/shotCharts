@@ -1,68 +1,76 @@
 <html>
-<head>
-    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/lightslider.css')}}" />
-    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/court.css')}}" />
-    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css')}}" />
-
-    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/d3.basketball-shot-chart.css')}}" />
-    <script src="https://d3js.org/d3.v3.min.js"></script>
-    <script src="http://rawgit.com/virajsanghvi/d3-plugins/master/hexbin/hexbin.js"></script>
-    <script src= "{{ url_for('static', filename='js/d3.chart.min.js')}}"></script>
-    <script src="http://rawgit.com/virajsanghvi/d3.chart.defaults/master/d3.chart.defaults.js"></script>
-    <script src= "{{ url_for('static', filename='js/d3.basketball-shot-chart.js')}}"></script>
-
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src= "{{ url_for('static', filename='js/lightslider.js')}}"></script>
-    <script src= "{{ url_for('static', filename='js/kinetic_v5.1.0/kinetic_v5.1.0.min.js')}}"></script>
-    <script src= "{{ url_for('static', filename='js/bootstrap.min.js')}}"></script>
-</head>
-
-<div class="teamDrop">
-    <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">Select Team
-    <span class="caret"></span></button>
-    <ul class="dropdown-menu">
-        {% for id, name in names.items() %}
-        <li><a href="{{ url_for('team', team_id = id) }}">{{name}}</a></li>
-        {% endfor %}
-    </ul>
-</div>
-
-<div id="playerInfoTable" class="playerInfoTable">
-    <div class="tableRow">
-        <div id="playerName" class="tableCol playerInfo">Name: </div>
-        <div id="shotsMade" class="tableCol shotsInfo">Shots Made: </div>
-        <div id="fgPercent" class="tableCol fgPercent">FG%: </div>
+    <head>
+        <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/lightslider.css')}}" />
+        <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/court.css')}}" />
+        <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css')}}" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src= "{{ url_for('static', filename='js/lightslider.js')}}"></script>
+        <script src= "{{ url_for('static', filename='js/kinetic_v5.1.0/kinetic_v5.1.0.min.js')}}"></script>
+        <script src= "{{ url_for('static', filename='js/bootstrap.min.js')}}"></script>
+    </head>
+    
+    <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Select Team
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    {% for id, name in names.items() %}
+                    <a href="{{ url_for('team', team_id = id) }}">{{name}}</a>
+                    {% endfor %}
+                </div>
+            </li>
+            <div id="playerInfoTable" class="playerInfoTable">
+                <div class="tableCol categories">
+                    <div class="category">Name:</div>
+                    <div class="category">Team: </div>
+                </div>
+                <div class="tableCol">
+                    <div id="playerName" class="tableItem"></div>
+                    <div id="playerTeam" class="tableItem"></div>
+                </div>
+                <div class="tableCol categories">
+                    <div class="category">Shots Made: </div>
+                    <div class="category">Shots Attempted: </div>
+                </div>
+                <div class="tableCol">
+                    <div id="shotsMade" class="tableItem"></div>
+                    <div id="shotsAttempted" class="tableItem"></div>
+                </div>
+                <div class="tableCol categories">
+                    <div class="category">FG%: </div>
+                    <div class="category">eFG%: </div>
+                </div>
+                <div class="tableCol">
+                    <div id="fgPercent" class="tableItem"></div>
+                    <div id="effFgPercent" class="tableItem"></div>
+                </div>
+            </div>
+        </ul>
+    </nav>
+    
+    <div class="playerContainer">
+        <ul id="lightSlider">
+            {% for img, id in team_images.items() %}
+                <a href= "{{ url_for('team_loaded', team_id = team_id, player_id = id) }}">
+                    <li data-thumb= {{img}}>
+                        <img src= "{{ url_for('static', filename='images/{}'.format(img))}}" />
+                    </li>
+                </a>
+            {% endfor %}
+        </ul>
     </div>
-    <div class="tableRow">
-        <div id="playerTeam" class="tableCol playerInfo">Team: </div>
-        <div id="shotsAttempted" class="tableCol shotsInfo">Shots Attempted: </div>
-        <div id="effFgPercent" class="tableCol fgPercent">eFG%: </div>
+    
+    
+    <div id="container">
+        <script src= "{{ url_for('static', filename='js/draw_court.js')}}"></script>
+        <script>
+            var result = addPlayerShots({{ playerShots | tojson }});
+            var playerInfo = getPlayerInfo({{ playerShots | tojson }});
+            injectPlayerInfo(playerInfo);
+        </script>
     </div>
-</div>
-
-<div class="playerContainer">
-    <ul id="lightSlider">
-        {% for img, id in team_images.items() %}
-            <a href= "{{ url_for('team_loaded', team_id = team_id, player_id = id) }}">
-                <li data-thumb= {{img}}>
-                    <img src= "{{ url_for('static', filename='images/{}'.format(img))}}" />
-                </li>
-            </a>
-        {% endfor %}
-    </ul>
-</div>
-
-<div id="chart">
-</div>
-
-<div id="container">
-    <script src= "{{ url_for('static', filename='js/draw_court.js')}}"></script>
-    <script>
-        var data = addPlayerShots({{ playerShots | tojson }});
-        var playerInfo = getPlayerInfo({{ playerShots | tojson }});
-        injectPlayerInfo(playerInfo);
-    </script>
-</div>
-
-
 </html>
+
