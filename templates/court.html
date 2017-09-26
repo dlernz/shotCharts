@@ -9,7 +9,8 @@
         <script src= "{{ url_for('static', filename='js/kinetic_v5.1.0/kinetic_v5.1.0.min.js')}}"></script>
         <script src= "{{ url_for('static', filename='js/bootstrap.min.js')}}"></script>
     </head>
-    
+
+    <a href="{{ url_for('clutch', team_id = team_id, player_id = player_id) }}" id="clutchTime" class="btn">Clutch Time</a>
     <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
         <ul class="navbar-nav">
             <li class="nav-item dropdown">
@@ -54,23 +55,29 @@
     <div class="playerContainer">
         <ul id="lightSlider">
             {% for img, id in team_images.items() %}
-                <a href= "{{ url_for('team_loaded', team_id = team_id, player_id = id) }}">
+                <a id="{{id}}" team_id = "{{team_id}}">
                     <li data-thumb= {{img}}>
-                        <img src= "{{ url_for('static', filename='images/{}'.format(img))}}" />
+                        <img team_id = {{team_id}} player_id = {{id}} src= "{{ url_for('static', filename='images/{}'.format(img))}}" />
                     </li>
                 </a>
+                <script>
+                    $("#" + {{id}}).on('click', function(){
+                        var player_id = $(this).attr('id');
+                        var team_id = $(this).attr('team_id');
+
+                        $.get("teamTest",{"team_id": team_id, "player_id": player_id},
+                            function(res) {
+                                nba_court_base();
+                                var result = addPlayerShots(res, false);
+                                var playerInfo = getPlayerInfo(res, false);
+                                injectPlayerInfo(playerInfo);
+                            }
+                        )
+                    })
+                </script>
             {% endfor %}
         </ul>
     </div>
-    
-    
-    <div id="container">
-        <script src= "{{ url_for('static', filename='js/draw_court.js')}}"></script>
-        <script>
-            var result = addPlayerShots({{ playerShots | tojson }});
-            var playerInfo = getPlayerInfo({{ playerShots | tojson }});
-            injectPlayerInfo(playerInfo);
-        </script>
-    </div>
+    {% extends "court_template.html" %}
 </html>
 

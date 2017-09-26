@@ -86,6 +86,12 @@ def get_player_shots_db(playerId):
         playerShots.append(shotChart)
     return playerShots
 
+def get_player_shots_clutch_db(playerId):
+    playerShots = []
+    for shotChart in Shot.select().where(Shot.playerId == playerId, Shot.period == 4, Shot.minutesRem <= 5):
+        playerShots.append(shotChart)
+    return playerShots
+
 def get_team_images(team_id):
     images = {}
     for shotChart in Shot.select().where(Shot.teamId == team_id):

@@ -1,0 +1,13 @@
+
+
+<div id="container">
+    <script src= "{{ url_for('static', filename='js/draw_court.js')}}"></script>
+
+    <script>
+        nba_court_base();
+        var result = addPlayerShots({{ playerShots | tojson }});
+        var playerInfo = getPlayerInfo({{ playerShots | tojson }});
+        injectPlayerInfo(playerInfo);
+    </script>
+</div>
+

@@ -54,3 +54,7 @@ div.playerContainer {
 .open > .dropdown-menu {
     display: grid!important;
 }
+
+.selectedPlayer {
+    border:1px solid yellow;
+}

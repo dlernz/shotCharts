@@ -80,8 +80,6 @@ var threes = new Kinetic.Shape({
 	fg: 0
 });
 
-nba_court_base();
-
 
 // TODO: Refactor for drawing court, maybe assigning CSS properties, class name, ids -- refactor to HTML 5 canvas?
 function nba_court_base() {
@@ -169,10 +167,12 @@ function nba_court_base() {
 	stage.add(court)
 }
 
-function addPlayerShots(playerShots){
+function addPlayerShots(playerShots, parse = true){
     for (i = 0; i < playerShots.length; i++) {
         var curShot = playerShots[i];
-        curShot = JSON.parse(curShot);
+        if (parse){
+			curShot = JSON.parse(curShot);
+		}
         var x = curShot['locX'];
         var y = curShot['locY'];
         var made = curShot['shotMadeFlag'];
@@ -223,16 +223,21 @@ $('#lightSlider').lightSlider({
 $(".dropdown-menu").css({"top": "60px", "left": "25px"});
 
 
-function getPlayerInfo(playerShots){
+function getPlayerInfo(playerShots, parse = true){
 	var curShot = playerShots[0];
-	curShot = JSON.parse(curShot);
+	if(parse){
+		curShot = JSON.parse(curShot);
+	}
 	var playerName = curShot["playerName"];
 	var teamName = curShot["teamName"];
 	var shotsAttempted = playerShots.length;
 	var shotsMade = 0;
 	var triples = 0;
 	for(var i = 0; i < playerShots.length; i++){
-		var shot = JSON.parse(playerShots[i]);
+		var shot = playerShots[i];
+		if (parse) {
+			shot = JSON.parse(shot);
+		}
 		var shotType = shot["shotType"];
 		var shotMadeFlag = shot["shotMadeFlag"];
 
@@ -259,6 +264,7 @@ function injectPlayerInfo(playerData){
 	 var tableElts = $(playerInfoTable).find(".tableItem");
 	 var data;
 	 $(tableElts.each(function(){
+	 	this.innerHTML = "";
 	 	var id = this.id;
 	 	var content = this.innerHTML;
 		data = playerData[id];
