@@ -65,7 +65,7 @@
                         var player_id = $(this).attr('id');
                         var team_id = $(this).attr('team_id');
 
-                        $.get("teamTest",{"team_id": team_id, "player_id": player_id},
+                        $.get("changePlayer",{"team_id": team_id, "player_id": player_id},
                             function(res) {
                                 nba_court_base();
                                 var result = addPlayerShots(res, false);
