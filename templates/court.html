@@ -57,7 +57,7 @@
             {% for img, id in team_images.items() %}
                 <a id="{{id}}" team_id = "{{team_id}}">
                     <li data-thumb= {{img}}>
-                        <img team_id = {{team_id}} player_id = {{id}} src= "{{ url_for('static', filename='images/{}'.format(img))}}" />
+                        <img class="playerImage" team_id = {{team_id}} player_id = {{id}} src= "{{ url_for('static', filename='images/{}'.format(img))}}" />
                     </li>
                 </a>
                 <script>

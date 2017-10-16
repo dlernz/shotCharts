@@ -19,7 +19,7 @@ def court():
     for item in playerShots:
         json_data = json.dumps(model_to_dict(item))
         playerDicts.append(json_data)
-    return render_template('court.html', playerShots = playerDicts)  # render a template
+    return render_template('court.html', playerShots = playerDicts)
 
 @app.route('/team')
 def team(team_id="1610612764", player_id="1627849"):

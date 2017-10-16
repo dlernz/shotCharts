@@ -222,6 +222,10 @@ $('#lightSlider').lightSlider({
 
 $(".dropdown-menu").css({"top": "60px", "left": "25px"});
 
+$(".playerImage").on('click', function(){
+	$(".selectedPlayer").toggleClass("selectedPlayer");
+	$(this).toggleClass("selectedPlayer");
+});
 
 function getPlayerInfo(playerShots, parse = true){
 	var curShot = playerShots[0];
